@@ -29,6 +29,10 @@ jobs:
             "$OIDC_URL_WITH_AUDIENCE" | jq -r .value)
           echo "::add-mask::${IDTOKEN}"
           echo "idToken=${IDTOKEN}" >> $GITHUB_OUTPUT
+          
+      - name: Debug OIDC Token
+        run: |
+          echo "${{ steps.create-oidc-token.outputs.idToken }}" | cut -d "." -f2 | base64 -d | jq
 
       - name: Check Permissions in Kubernetes
         run: |
