@@ -45,3 +45,12 @@ jobs:
           --server="https://138.2.182.200:6443" \
           --insecure-skip-tls-verify \
           auth can-i --list
+
+
+      - name: Check 3Permissions in Kubernetes
+        run: |
+          kubectl \
+          --token=${{ steps.create-oidc-token.outputs.idToken }} \
+          --server="https://138.2.182.200:6443" \
+          --insecure-skip-tls-verify \
+          auth can-i --list
