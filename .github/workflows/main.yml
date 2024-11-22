@@ -36,7 +36,7 @@ jobs:
 
       - name: test
         run: |
-          echo "$GITHUB_OUTPUT"
+          echo $GITHUB_OUTPUT
 
       - name: Check Permissions in Kubernetes
         run: |
