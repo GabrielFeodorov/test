@@ -1,4 +1,4 @@
-name: OKE-OIDC
+name: oke-oidc
 
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
@@ -33,6 +33,10 @@ jobs:
       - name: Debug OIDC Token
         run: |
           echo "${{ steps.create-oidc-token.outputs.idToken }}" | cut -d "." -f2 | base64 -d | jq
+
+      - name: test
+        run: |
+          echo "$GITHUB_OUTPUT"
 
       - name: Check Permissions in Kubernetes
         run: |
