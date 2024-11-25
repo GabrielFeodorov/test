@@ -1,4 +1,4 @@
-name: oke-oidc
+name: OKE-OIDC
 
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
@@ -29,30 +29,11 @@ jobs:
             "$OIDC_URL_WITH_AUDIENCE" | jq -r .value)
           echo "::add-mask::${IDTOKEN}"
           echo "idToken=${IDTOKEN}" >> $GITHUB_OUTPUT
-          
-      - name: Debug OIDC Token
-        run: |
-          echo "${{ steps.create-oidc-token.outputs.idToken }}" | cut -d "." -f2 | base64 -d | jq
 
-      - name: test
-        run: |
-          echo $GITHUB_OUTPUT
-
-      - name: Check 3Permissions in Kubernetes
+      - name: Check Permissions in Kubernetes
         run: |
           kubectl \
           --token=$ \
           --server="https://138.2.182.200:6443" \
           --insecure-skip-tls-verify \
           auth can-i --list
-
-      - name: Check Permissions in Kubernetes
-        run: |
-          kubectl \
-          --token=${{ steps.create-oidc-token.outputs.idToken }} \
-          --server="https://138.2.182.200:6443" \
-          --insecure-skip-tls-verify \
-          auth can-i --list
-
-
-
